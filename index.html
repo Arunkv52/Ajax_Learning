@@ -1,11 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajax Learning</title>
 </head>
+
 <body>
-    
+    <!-- show counteries -->
+    <button onclick="showCountries()">Show Countries</button>
+
+    <div id="result">
+        <!-- will be populated here -->
+    </div>
+
+
+
+    <!-- Script -->
+    <script>
+        // get data from server
+        function showCountries() {
+            // Request send
+            const val = new XMLHttpRequest();
+            // Request get
+            val.open("GET", "https://restcountries.com/v3.1/all", true); //Async or not if yes we should add true otherwise false
+
+            // Response received
+            val.onload = function () {
+                if (val.status == 200) {
+                    // for testing purpose
+                    console.log("Suceessfully show");
+                    
+                    const countries = JSON.parse(this.response)
+                    console.log(countries);
+                    
+                    // need a name only
+                    countries.forEach(country => {
+
+                        // create a div for each country name
+                        const countryCard = document.createElement('div');
+                        countryCard.innerHTML = country.name.common;
+                        countryCard.style.marginBottom = '10px';
+                        
+                        // create a img for each country flag
+                        const countryImg = document.createElement('img');
+                        countryImg.src = country.coatOfArms.png;
+                        countryImg.style.width = '200px';
+
+                        // print the result
+                        const result = document.getElementById('result');
+                        result.appendChild(countryCard);
+                        result.appendChild(countryImg);
+
+
+                    });
+                    
+
+                    
+                }
+            }
+            val.send();
+            
+        }
+    </script>
 </body>
+
 </html>
