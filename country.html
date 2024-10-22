@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest Api - AJAX</title>
+    <!-- Style sheet inline -->
+    <style>
+        .btn button {
+            background-color: red;
+            padding: 1% 5%;
+            color: #ffffff;
+            font-size: 18px;
+            border: none;
+            box-shadow: 7px 9px 7px 2px #e8e8e8;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Button start -->
+    <div class="btn">
+        <button onclick="showCountries()">Show all countries</button>
+    </div>
+
+    <div id="result">
+
+    </div>
+
+
+    <!-- This space for rest api call (https://restcountries.com/#endpoints-all) -->
+    <script>
+        function showCountries() {
+            // Request for data send and receive
+            const xpar = new XMLHttpRequest();
+
+            xpar.open("GET", "https://restcountries.com/v3.1/all", true);
+
+            // When data is received
+            xpar.onload = function () {
+                if (xpar.status == 200) {
+                    console.log("page working is fine");
+
+                    // Parsing JSON data
+                    const res = JSON.parse(this.response)
+                    console.log(res);
+
+                    // displayig data in html
+                    res.forEach(country => {
+                        
+                        // get the id
+                        const result = document.getElementById('result');
+
+                        // For name
+                        const countryDiv = document.createElement('p');
+                        countryDiv.innerHTML = country.name.common;
+                        result.appendChild(countryDiv);
+
+                        // For flag
+                        const countryText = document.createElement('img');
+                        countryText.src = country.coatOfArms.png;
+                        countryText.style.width = '100px'
+                        result.appendChild(countryText);
+
+                    });                    
+
+                }
+            }
+
+            xpar.send();
+        }
+    </script>
+</body>
+
+</html>

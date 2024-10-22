@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array of data - API</title>
+</head>
+
+<body>
+
+    <!-- btn place start -->
+    <div class="btn">
+        <button onclick="clientDetails()">Get the Result</button>
+    </div>
+
+    <!-- result section start -->
+    <div id="result">
+        <!-- data will be populated here -->
+        <p>Here you will get the result</p>
+    </div>
+
+
+    <!-- Script tag start here -->
+    <script>
+        function clientDetails() {
+            // API Request from web server
+            const clientData = new XMLHttpRequest();
+
+            clientData.open("GET", "https://reqres.in/api/users/", true);
+
+            clientData.onload = function () {
+                if (clientData.status == 200) {
+                    // Ready to display the result
+                    console.log("successfully implemented");
+
+                    const clientRes = JSON.parse(this.response)
+                    console.log(clientRes);
+
+
+                    // Find the id equivalent value
+                    const specClient = clientRes.data.find(clientShow => clientShow.id === 9)
+                    console.log(specClient);
+
+
+                    if (specClient) {
+                        const clientName = document.createElement("p");
+                        clientName.innerHTML =
+                            `<h3>Name: ${specClient.first_name} ${specClient.last_name}</h3>
+                            <h3>Email: ${specClient.email}</h3>
+                            <img src="${specClient.avatar}" alt="User Avatar">`;
+
+                        // Remove previous data
+                        result.innerHTML = '';
+                        // Append the new data to the result div
+                        result.appendChild(clientName);
+                    } else {
+                        const clientName = document.createElement("p");
+                        clientName.innerHTML = '<p>User not found</p>'
+                        // Remove previous data
+                        result.innerHTML = '';
+                        // Append the new data to the result div
+                        result.appendChild(clientName);
+                    }
+
+                }
+            }
+
+            clientData.send();
+
+        }
+    </script>
+</body>
+
+</html>

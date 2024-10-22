@@ -25,6 +25,7 @@
             const val = new XMLHttpRequest();
             // Request get
             val.open("GET", "https://restcountries.com/v3.1/all", true); //Async or not if yes we should add true otherwise false
+            val.send();
 
             // Response received
             val.onload = function () {
@@ -52,16 +53,9 @@
                         const result = document.getElementById('result');
                         result.appendChild(countryCard);
                         result.appendChild(countryImg);
-
-
-                    });
-                    
-
-                    
+                    });                    
                 }
-            }
-            val.send();
-            
+            }            
         }
     </script>
 </body>
